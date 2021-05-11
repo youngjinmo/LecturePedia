@@ -1,7 +1,7 @@
 {{> /layout/header}}
 
 <div class="container" style="padding-top: 4%;">
-    <div id="loginForm" style="padding-bottom: 12%;">
+    <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 12%;">
         <h2 style="margin-bottom: 1em">로그인</h2>
         <form name="question" method="post" action="/user/login">
             <label for="email">이메일</label>
@@ -9,9 +9,11 @@
             <label for="password" style="margin-top: 1.2em;">비밀번호</label>
             <input type="password" class="form-control" id="password" name="password"
                    placeholder="비밀번호를 입력해주세요">
-            <button type="submit" class="btn btn-outline-dark pull-right" style="margin-top: 3em;">로그인</button>
-            <a href="/signup"><button type="button" class="btn btn-outline-dark pull-right"
-                                     style="margin-left: 1em; margin-top: 3em;">회원가입</button></a>
+            <button type="submit" class="btn btn-success pull-right" style="margin-top: 3em;">로그인</button>
+            <a href="/signup">
+                <button type="button" class="btn btn-secondary pull-right"
+                        style="margin-left: 1em; margin-top: 3em;">회원가입</button>
+            </a>
         </form>
     </div>
 </div>
