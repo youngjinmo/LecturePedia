@@ -1,0 +1,24 @@
+{{> /layout/header}}
+
+<div class="container" style="padding-top: 4%;">
+    <div id="loginForm" style="padding-bottom: 12%;">
+        <h2 style="margin-bottom: 1em">회원가입</h2>
+        <form name="question" method="post" action="/user/login">
+            <label for="email">이메일</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요">
+            <label for="nickname" style="margin-top: 1.2em;">닉네임</label>
+            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임을 입력해주세요">
+            <label for="password" style="margin-top: 1.2em;">비밀번호</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   placeholder="8자 이상 20자 이하로 작성해주세요.">
+            <label for="passwordConfirm" style="margin-top: 1.2em;">비밀번호 확인</label>
+            <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+                   placeholder="비밀번호를 다시 입력해주세요">
+            <button type="submit" class="btn btn-outline-dark pull-right" style="margin-top: 3em;">회원가입</button>
+            <a href="/signin"><button type="button" class="btn btn-outline-dark pull-right"
+                     style="margin-left: 1em; margin-top: 3em;">로그인</button></a>
+        </form>
+    </div>
+</div>
+
+{{> /layout/footer}}
