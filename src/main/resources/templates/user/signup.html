@@ -3,7 +3,7 @@
 <div class="container" style="padding-top: 4%;">
     <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 12%;">
         <h2 style="margin-bottom: 1em">회원가입</h2>
-        <form name="question" method="post" action="/user/create">
+        <form name="question" method="post" action="/user/signupProc">
             <label for="email">이메일</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요">
             <label for="nickname" style="margin-top: 1.2em;">닉네임</label>
@@ -21,7 +21,7 @@
             </div>
             <button type="submit" id="signUpBtn" class="btn btn-success pull-right" style="margin-top: 3em; float:
             left" onclick="welcome()" disabled>회원가입</button>
-            <a href="/signin"><button type="button" class="btn btn-secondary pull-right"
+            <a href="/login"><button type="button" class="btn btn-secondary pull-right"
                      style="margin-left: 1em; margin-top: 3em;">로그인</button></a>
         </form>
     </div>
@@ -52,7 +52,7 @@
                             validationComponents[0] = true;
                         } else {
                             alert('이미 가입된 이메일입니다. 다른 이메일로 시도해주세요.');
-                            email = "";
+                            $('#email').val('');
                         }
                     },
                     error: function(error){
@@ -61,7 +61,7 @@
                 });
             } else {
                 alert('이메일 형식이 올바르지 않습니다.');
-                document.getElementById('email').innerText='';
+                $('#email').val('');
             }
         });
     });

@@ -4,21 +4,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/signin")
+    @Autowired
+    private UserRepository userRepository;
+
+    @GetMapping("/login")
     public String loginPage() {
         return "user/signin";
     }
 
-    @PostMapping("/user/login")
-    public String loginProcess(User user) {
-        System.out.println("로그인!!");
-        System.out.println("user : "+user.toString());
+    @PostMapping("/user/loginProc")
+    public String loginProcess(String email, String password, HttpSession session) {
+        User loginUser = userRepository.findByEmail(email);
+        if(loginUser==null) {
+            System.out.println("존재하지 않는 이메일 :"+email);
+            return "redirect:/signup";
+        }
+        if(!userService.validationLoginPassword(email, password)) {
+            System.out.println("로그인 실패!! "+email);
+            return "user/signin";
+        }
+        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
+        System.out.println("로그인!! :"+email);
         return "redirect:/";
     }
 
@@ -27,12 +41,12 @@ public class UserController {
         return "user/signup";
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/user/signupProc")
     public String signUpProcess(User user) {
         userService.createUser(user);
         System.out.println("회원가입!!");
         System.out.println("user : "+user.toString());
-        return "redirect:/signin";
+        return "redirect:/login";
     }
 
     @ResponseBody

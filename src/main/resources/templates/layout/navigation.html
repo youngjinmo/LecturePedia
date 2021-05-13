@@ -18,7 +18,13 @@
           <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+        {{^sessionedUser}}
         <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
+        {{/sessionedUser}}
+        {{#sessionedUser}}
+        <li class="nav-item"><a class="nav-link" href="/user/update">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+        {{/sessionedUser}}
       </ul>
     </div>
   </div>
