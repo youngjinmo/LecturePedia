@@ -54,4 +54,12 @@ public class UserController {
     public boolean emailChk(@RequestBody String email) {
         return userService.emailValidation(email);
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        User user = HttpSessionUtils.getUserFromSession(session);
+        session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        System.out.println("로그아웃!! "+user.getEmail());
+        return "redirect:/";
+    }
 }
