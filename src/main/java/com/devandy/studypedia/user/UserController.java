@@ -1,5 +1,6 @@
 package com.devandy.studypedia.user;
 
+import com.devandy.studypedia.utils.HttpSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class UserController {
     public String signUpProcess(User user) {
         userService.createUser(user);
         System.out.println("회원가입!!");
-        System.out.println("user : "+user.toString());
+        System.out.println("user : "+user.getEmail());
         return "redirect:/login";
     }
 
