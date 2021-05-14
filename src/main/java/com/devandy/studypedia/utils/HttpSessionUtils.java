@@ -1,4 +1,6 @@
-package com.devandy.studypedia.user;
+package com.devandy.studypedia.utils;
+
+import com.devandy.studypedia.user.User;
 
 import javax.servlet.http.HttpSession;
 

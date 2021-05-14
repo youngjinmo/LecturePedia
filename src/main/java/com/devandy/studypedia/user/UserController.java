@@ -24,17 +24,13 @@ public class UserController {
     @PostMapping("/user/loginProc")
     public String loginProcess(String email, String password, HttpSession session) {
         User loginUser = userRepository.findByEmail(email);
-        if(loginUser==null) {
-            System.out.println("존재하지 않는 이메일 :"+email);
-            return "redirect:/signup";
-        }
-        if(!userService.validationLoginPassword(email, password)) {
-            System.out.println("로그인 실패!! "+email);
+        if(userService.validationLogin(email, password)) {
+            session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
+            System.out.println("로그인 !! : "+email);
+            return "redirect:/";
+        } else {
             return "user/signin";
         }
-        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-        System.out.println("로그인!! :"+email);
-        return "redirect:/";
     }
 
     @GetMapping("/signup")

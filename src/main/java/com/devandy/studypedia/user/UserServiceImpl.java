@@ -1,11 +1,8 @@
 package com.devandy.studypedia.user;
 
-import com.devandy.studypedia.utils.HttpSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpSession;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,7 +26,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean validationLogin(String email, String password, HttpSession session) {
+    public boolean validationLogin(String email, String password) {
         User loginUser = userRepository.findByEmail(email);
 
         if(loginUser==null) {
@@ -42,8 +39,6 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-        System.out.println("로그인 !! : "+email);
         return true;
     }
 }
