@@ -27,7 +27,7 @@ public class UserTest {
         User user = new User();
         user.setId(1L);
         user.setEmail("youngjinmo@gmail.com");
-        user.setNickname("DevAndy");
+        user.setUserName("DevAndy");
         user.setPassword("1q2w3e4r");
 
         // when
@@ -47,17 +47,27 @@ public class UserTest {
 
         User user = new User();
         user.setEmail(email);
-        user.setNickname("test");
+        user.setUserName("test");
         user.setPassword(rawPassword);
+        user.setRole(Role.USER);
+
+        User user2 = new User();
+        user2.setEmail("test@daum.net");
+        user2.setUserName("test2");
+        user2.setPassword(rawPassword);
+        user2.setRole(Role.USER);
 
         // when
         userService.createUser(user);
+        userService.createUser(user2);
         String encodedPassword = userRepository.findByEmail(email).getPassword();
+        String encodedPassword2 = userRepository.findByEmail("test@daum.net").getPassword();
 
         // then
         assertAll(
-                () -> assertNotEquals(rawPassword, encodedPassword),
-                () -> assertTrue(passwordEncoder.matches(rawPassword, encodedPassword))
+                () -> assertTrue(passwordEncoder.matches(rawPassword,encodedPassword)),
+                () -> assertTrue(passwordEncoder.matches(rawPassword,encodedPassword2)),
+                () -> assertNotEquals(encodedPassword, encodedPassword2)
         );
     }
 }
