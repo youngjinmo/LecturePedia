@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -22,6 +24,11 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+
+        LocalDateTime joinedDate = LocalDateTime.now();
+        user.setJoinedDate(joinedDate);
+        user.setLastLoginedDate(joinedDate);
+
         user.setRole(Role.USER);
         userRepository.save(user);
     }
@@ -40,6 +47,8 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+        LocalDateTime logedinDate = LocalDateTime.now();
+        loginUser.setLastLoginedDate(logedinDate);
         return true;
     }
 }

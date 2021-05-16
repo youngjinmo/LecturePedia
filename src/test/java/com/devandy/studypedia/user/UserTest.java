@@ -25,13 +25,12 @@ public class UserTest {
     void signUp() {
         // given
         User user = new User();
-        user.setId(1L);
         user.setEmail("youngjinmo@gmail.com");
         user.setUserName("DevAndy");
         user.setPassword("1q2w3e4r");
 
         // when
-        userRepository.save(user);
+        userService.createUser(user);
 
         // then
         User actual = userRepository.findByEmail(user.getEmail());
