@@ -18,16 +18,21 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String nickname;
+    private String userName;
 
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Builder
-    public User(String email, String nickname, String password) {
+    public User(String email, String userName, String password, Role role) {
         this.email = email;
-        this.nickname = nickname;
+        this.userName = userName;
         this.password = password;
+        this.role = role;
     }
 
     public boolean matchPassword(String password) {
