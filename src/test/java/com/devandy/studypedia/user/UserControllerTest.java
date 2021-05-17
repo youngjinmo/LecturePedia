@@ -15,14 +15,14 @@ public class UserControllerTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    @DisplayName("회원가입 API 테스트")
+    @DisplayName("회원가입 API 요청 테스트")
     void getSignUpPage() throws Exception {
         String body = this.testRestTemplate.getForObject("/user/signup", String.class);
         assertThat(body).contains("회원가입");
     }
 
     @Test
-    @DisplayName("로그인 API 테스트")
+    @DisplayName("로그인 API 요청 테스트")
     void getSignInPage() throws Exception {
         String body = this.testRestTemplate.getForObject("/user/login", String.class);
         assertThat(body).contains("로그인");
