@@ -1,15 +1,15 @@
 package com.devandy.studypedia.user;
 
+import com.devandy.studypedia.utils.BaseTimeEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
 @ToString
 @NoArgsConstructor
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
-    @Column(nullable = false)
-    private LocalDateTime joinedDate;
-
-    private LocalDateTime lastLoginedDate;
 
     @Builder
     public User(String email, String userName, String password, Role role) {

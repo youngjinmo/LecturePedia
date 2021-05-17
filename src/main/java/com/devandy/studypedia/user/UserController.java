@@ -27,7 +27,7 @@ public class UserController {
         if(userService.validationLogin(email, password)) {
             session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
             System.out.println("로그인 !! : "+email);
-            System.out.println(loginUser.getLastLoginedDate());
+            System.out.println(loginUser.getLastModifiedDate());
             return "redirect:/";
         } else {
             return "redirect:/user/userLogin";
@@ -42,8 +42,7 @@ public class UserController {
     @PostMapping("/user/signupProc")
     public String signUpProcess(User user) {
         userService.createUser(user);
-        System.out.println("회원가입!!");
-        System.out.println("user : "+user.getEmail());
+        System.out.println("회원가입!! : user.getEmail()");
         return "redirect:/user/login";
     }
 
