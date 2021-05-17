@@ -2,9 +2,9 @@
 
 <title>Lecturepedia - 경력에 따른 난이도로 강의를 찾아보세요!</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+<link href="/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <!-- Navigation-->
@@ -19,7 +19,7 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
         {{^sessionedUser}}
-        <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
+        <li class="nav-item"><a class="nav-link" href="/user/signup">Signup</a></li>
         {{/sessionedUser}}
         {{#sessionedUser}}
         <li class="nav-item"><a class="nav-link" href="/user/update">Profile</a></li>

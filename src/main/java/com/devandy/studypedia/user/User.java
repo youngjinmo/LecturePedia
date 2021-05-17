@@ -41,8 +41,4 @@ public class User {
         this.role = role;
     }
 
-    public boolean matchPassword(String password) {
-        return this.password.equals(password);
-    }
-
 }

@@ -1,13 +1,13 @@
 {{> /layout/navigation }}
 
 <div class="container" style="padding-top: 4%;">
-    <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 12%;">
+    <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 5%;">
         <h2 style="margin-bottom: 1em">회원가입</h2>
         <form name="question" method="post" action="/user/signupProc">
             <label for="email">이메일</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요">
-            <label for="nickname" style="margin-top: 1.2em;">닉네임</label>
-            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임을 입력해주세요">
+            <label for="userName" style="margin-top: 1.2em;">닉네임</label>
+            <input type="text" class="form-control" id="userName" name="userName" placeholder="닉네임을 입력해주세요">
             <label for="password" style="margin-top: 1.2em;">비밀번호</label>
             <input type="password" class="form-control" id="password" name="password"
                    placeholder="8자 이상 20자 이하로 작성해주세요.">
@@ -21,7 +21,7 @@
             </div>
             <button type="submit" id="signUpBtn" class="btn btn-success pull-right" style="margin-top: 3em; float:
             left" onclick="welcome()" disabled>회원가입</button>
-            <a href="/login"><button type="button" class="btn btn-secondary pull-right"
+            <a href="/user/login"><button type="button" class="btn btn-secondary pull-right"
                      style="margin-left: 1em; margin-top: 3em;">로그인</button></a>
         </form>
     </div>
@@ -65,9 +65,9 @@
     });
 
     $(document).ready(function () {
-        $('#nickname').on('blur', function () {
-            var nickname = document.getElementById('nickname').value;
-            if(nickname.length>0) {
+        $('#userName').on('blur', function () {
+            var userName = document.getElementById('userName').value;
+            if(userName.length>0) {
                 $(this).css("background-color","#E3ECFE");
                 validationComponents[1] = true;
             }

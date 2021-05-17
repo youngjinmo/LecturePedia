@@ -16,9 +16,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/login")
+    @GetMapping("/user/login")
     public String loginPage() {
-        return "user/signin";
+        return "user/userLogin";
     }
 
     @PostMapping("/user/loginProc")
@@ -27,15 +27,16 @@ public class UserController {
         if(userService.validationLogin(email, password)) {
             session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
             System.out.println("로그인 !! : "+email);
+            System.out.println(loginUser.getLastLoginedDate());
             return "redirect:/";
         } else {
-            return "user/signin";
+            return "redirect:/user/userLogin";
         }
     }
 
-    @GetMapping("/signup")
+    @GetMapping("/user/signup")
     public String signupPage() {
-        return "user/signup";
+        return "user/userCreate";
     }
 
     @PostMapping("/user/signupProc")
@@ -43,20 +44,12 @@ public class UserController {
         userService.createUser(user);
         System.out.println("회원가입!!");
         System.out.println("user : "+user.getEmail());
-        return "redirect:/login";
+        return "redirect:/user/login";
     }
 
     @ResponseBody
     @RequestMapping(value = "/user/emailChk", method = RequestMethod.POST)
     public boolean emailChk(@RequestBody String email) {
         return userService.emailValidation(email);
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        User user = HttpSessionUtils.getUserFromSession(session);
-        session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        System.out.println("로그아웃!! "+user.getEmail());
-        return "redirect:/";
     }
 }
