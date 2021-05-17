@@ -54,7 +54,8 @@
                         }
                     },
                     error: function(error){
-                        alert("이메일 중복함수 에러 : "+error);
+                        alert("이메일 중복함수 에러 : ");
+                        console.log(error);
                     }
                 });
             } else {
@@ -101,7 +102,6 @@
             validationComponents[2] = true;
             $('#passwordConfirm').css("background-color","#E3ECFE");
             alert("사용가능한 비밀번호입니다.");
-            $('signUpBtn').attr("disabled", false);
         }
 
         if(validationComponents[0]===true && validationComponents[1]===true && validationComponents[2]===true) {

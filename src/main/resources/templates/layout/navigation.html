@@ -27,7 +27,7 @@
         <li class="nav-item"><a class="nav-link" href="/user/signup">Signup</a></li>
         {{/sessionedUser}}
         {{#sessionedUser}}
-        <li class="nav-item"><a class="nav-link" href="/user/update">Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="/user/{{id}}">Profile</a></li>
         <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
         {{/sessionedUser}}
       </ul>
