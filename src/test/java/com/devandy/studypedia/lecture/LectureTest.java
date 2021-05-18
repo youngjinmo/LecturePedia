@@ -30,12 +30,12 @@ public class LectureTest {
         lecture.setTitle("스프링 MVC");
         lecture.setCreator("김영한");
         lecture.setLectureUrl("https://inflearn.com");
-        lecture.setPublisher(1L);
+        lecture.setAuthor(1L);
 
         session.setAttribute(HttpSessionUtils.USER_SESSION_KEY,"admin");
 
         // when
-        lectureService.postLecture(lecture);
+        lectureService.addLecture(lecture);
 
         // then
         Lecture targetLecture = lectureRepository.findById(1L).get();

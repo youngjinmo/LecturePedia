@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class LectureServiceImpl implements LectureService{
@@ -17,9 +18,9 @@ public class LectureServiceImpl implements LectureService{
     private HttpSession session;
 
     @Override
-    public void postLecture(Lecture lecture) {
+    public void addLecture(Lecture lecture) {
         User sessionedUser = HttpSessionUtils.getUserFromSession(session);
-        lecture.setPublisher(sessionedUser.getId());
+        lecture.setAuthor(sessionedUser.getId());
         lectureRepository.save(lecture);
     }
 
@@ -45,9 +46,14 @@ public class LectureServiceImpl implements LectureService{
 
     public boolean validationAuthorization(Lecture lecture, HttpSession session) {
         if(HttpSessionUtils.getUserFromSession(session)!=null
-            && HttpSessionUtils.getUserFromSession(session).getId().equals(lecture.getPublisher())) {
+            && HttpSessionUtils.getUserFromSession(session).getId().equals(lecture.getAuthor())) {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Lecture> findAll() {
+        return lectureRepository.findAll();
     }
 }
