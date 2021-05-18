@@ -1,16 +1,18 @@
 {{> /layout/navigation }}
 
 <div class="container" style="padding-top: 4%;">
-  <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 5%;">
+  <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 10%;">
     <h2 style="margin-bottom: 1em">강의 등록하기</h2>
     <form name="question" method="post" action="/lecture/registering">
       <label for="title">강좌명</label>
       <input type="text" class="form-control" id="title" name="title" placeholder="강의 이름을 작성해주세요.">
       <label for="creator" style="margin-top: 1.2em;">강의 개설자</label>
       <input type="text" class="form-control" id="creator" name="creator" placeholder="누가 강의를 만들어주셨나요?">
+      <label for="description" style="margin-top: 1.2em;">강의 소개</label>
+      <textarea type="text" class="form-control" id="description" name="description" placeholder="강의를 짧게 요약해주세요!"></textarea>
       <label for="lectureUrl" style="margin-top: 1.2em;">강의 URL</label>
       <input type="text" class="form-control" id="lectureUrl" name="lectureUrl" placeholder="강의 URL을 입력해주세요.">
-      <button type="submit" id="postBtn" class="btn btn-success pull-right" style="margin-top: 3em; float:
+      <button type="submit" id="postBtn" class="btn btn-success pull-right" style="margin-top: 1.5em; float:
             left" >등록하기</button>
     </form>
   </div>
