@@ -1,34 +1,44 @@
 {{> /layout/navigation }}
 
 <div class="container" style="margin-top: 5%; margin-bottom: 5%; width: 80%">
-  <table class="table table-hover" style="margin: 3em; width: auto">
-    <h2 style="margin-left: 1.8em">강의</h2>
+  <div id="updateForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 10%;">
     {{#lecture}}
-    <tr>
-      <th style="width: 20%">강의명</th>
-      <td>{{title}}</td>
-    </tr>
-    <tr>
-      <th>강의자</th>
-      <td>{{creator}}</td>
-    </tr>
-    <tr>
-      <th>등록인</th>
-      <td>{{author}}</td>
-    </tr>
-    <tr>
-      <th>등록일</th>
-      <td>{{firstCreatedDate}}</td>
-    </tr>
-    <tr>
-      <th>강의 URL 주소</th>
-      <td><a href="{{lectureUrl}}" target="_blank">{{lectureUrl}}</a></td>
-    </tr>
-    <tr>
-      <th>강의 소개</th><td>{{description}}</td>
-    </tr>
+    <table class="table table-hover">
+      <h2>강의</h2>
+      <tr>
+        <th style="width: 20%">강의명</th>
+        <td>{{title}}</td>
+      </tr>
+      <tr>
+        <th>강의자</th>
+        <td>{{creator}}</td>
+      </tr>
+      <tr>
+        <th>등록자</th>
+        <td>{{author}}</td>
+      </tr>
+      <tr>
+        <th>등록일</th>
+        <td>{{firstCreatedDate}}</td>
+      </tr>
+      <tr>
+        <th>강의 URL 주소</th>
+        <td><a href="{{lectureUrl}}" target="_blank">{{lectureUrl}}</a></td>
+      </tr>
+      <tr>
+        <th>강의 소개</th><td>{{description}}</td>
+      </tr>
+    </table>
+    <a href="/lecture/list">
+      <button class="btn btn-success pull-right" style="margin-top: 1em; float: left;">목록으로</button>
+    </a>
+    {{#isCurrentUserAuthor}}
+    <a href="/lecture/update/{{lecture.id}}">
+      <button class="btn btn-success pull-right" style="margin-top: 1em; margin-left: 1.5em">수정하기</button>
+    </a>
+    {{/isCurrentUserAuthor}}
     {{/lecture}}
-  </table>
+  </div>
 </div>
 
 {{> /layout/footer}}

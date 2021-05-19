@@ -2,6 +2,7 @@ package com.devandy.studypedia.lecture;
 
 import com.devandy.studypedia.user.User;
 import com.devandy.studypedia.utils.HttpSessionUtils;
+import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,13 @@ public class LectureServiceImpl implements LectureService{
     }
 
     @Override
-    public void updateLecture(Long id, Lecture lecture) {
-        Lecture updateLecture = lectureRepository.findById(id).get();
-        lectureRepository.save(updateLecture);
+    public void updateLecture(Long id, RequestUpdateLectureDto requestUpdateLectureDto) {
+        Lecture targetLecture = lectureRepository.findById(id).get();
+        targetLecture.setTitle(requestUpdateLectureDto.getTitle());
+        targetLecture.setCreator(requestUpdateLectureDto.getCreator());
+        targetLecture.setDescription(requestUpdateLectureDto.getDescription());
+        targetLecture.setLectureUrl(requestUpdateLectureDto.getLectureUrl());
+        lectureRepository.save(targetLecture);
     }
 
     @Override

@@ -1,19 +1,19 @@
 {{> /layout/navigation }}
 
-<div class="container" style="margin-top: 5%; margin-bottom: 5%; text-align: center;">
+<div class="container" style="min-height: 540px; margin-top: 5%; text-align: center;">
   <h2 style="margin-bottom: 1em">강의 목록</h2>
+  {{#lectures}}
   <table class="table table-hover">
     <thead>
     <tr>
       <th>강의 번호</th>
       <th>강의명</th>
       <th>강의자</th>
-      <th>추천인</th>
+      <th>등록자</th>
       <th>등록일</th>
     </tr>
     </thead>
     <tbody>
-    {{#lectures}}
     <tr>
       <td>{{id}}</td>
       <td><a href="/lecture/{{id}}">{{title}}</a></td>
@@ -21,9 +21,12 @@
       <td>{{author}}</td>
       <td>{{firstCreatedDate}}</td>
     </tr>
-    {{/lectures}}
     </tbody>
   </table>
+  <a href="/lecture/register">
+    <button class="btn btn-success pull-right" style="margin-top: 1em; float:left;">등록하기</button>
+  </a>
+  {{/lectures}}
 </div>
 
 {{> /layout/footer}}

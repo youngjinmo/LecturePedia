@@ -1,6 +1,8 @@
 package com.devandy.studypedia.lecture;
 
+import com.devandy.studypedia.user.User;
 import com.devandy.studypedia.utils.HttpSessionUtils;
+import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,10 @@ public class LectureController {
     private LectureService lectureService;
 
     @Autowired
-    private LectureRepository lectureRepository;
-
-    @Autowired
     private HttpSession session;
 
     @GetMapping("/lecture/register")
-    public String getLecturePage() {
+    public String registerFormLecture() {
         if(session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)==null) {
             return "redirect:/user/login";
         }
@@ -33,11 +32,11 @@ public class LectureController {
     @PostMapping("/lecture/registering")
     public String registrationLecture(Lecture lecture) {
         lectureService.addLecture(lecture);
-        return "redirect:/";
+        return "redirect:/lecture/list";
     }
 
     @GetMapping("/lecture/list")
-    public String listAll(Model model) {
+    public String getLectureList(Model model) {
         if(lectureService.findAll().isEmpty()) {
             return "redirect:/lecture/register";
         }
@@ -46,9 +45,27 @@ public class LectureController {
     }
 
     @GetMapping("/lecture/{id}")
-    public String getLecture(@PathVariable Long id, Model model) {
-        Lecture lecture = lectureRepository.findById(id).get();
+    public String getLecture(@PathVariable Long id, Model model, HttpSession session) {
+        Lecture lecture = lectureService.getLecture(id);
         model.addAttribute("lecture",lecture);
+
+        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        if(currentUser!=null && currentUser.getId().equals(lecture.getAuthor())) {
+            model.addAttribute("isCurrentUserAuthor",currentUser);
+        }
         return "lecture/detailLecture";
+    }
+
+    @GetMapping("/lecture/update/{id}")
+    public String updateFormLecture(@PathVariable Long id, Model model) {
+        Lecture lecture = lectureService.getLecture(id);
+        model.addAttribute("lecture",lecture);
+        return "lecture/updateLecture";
+    }
+
+    @PostMapping("/lecture/updateProc/{id}")
+    public String updateLecture(@PathVariable Long id, RequestUpdateLectureDto requestUpdateLectureDto) {
+        lectureService.updateLecture(id, requestUpdateLectureDto);
+        return "redirect:/lecture/list";
     }
 }

@@ -1,0 +1,27 @@
+{{> /layout/navigation }}
+
+<div class="container" style="min-height: 540px; padding-top: 4%;">
+  <div id="updateForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 10%;">
+    <h2 style="margin-bottom: 1em">강의 수정하기</h2>
+    <form name="question" method="post" action="/lecture/updateProc/{{id}}">
+      {{#lecture}}
+      <label for="title">강좌명</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{title}}">
+      <label for="creator" style="margin-top: 1.2em;">강의 개설자</label>
+      <input type="text" class="form-control" id="creator" name="creator" value="{{creator}}">
+      <label for="description" style="margin-top: 1.2em;">강의 소개</label>
+      <textarea type="text" class="form-control" id="description" name="description">{{description}}</textarea>
+      <label for="lectureUrl" style="margin-top: 1.2em;">강의 URL</label>
+      <input type="text" class="form-control" id="lectureUrl" name="lectureUrl" value="{{lectureUrl}}">
+      {{/lecture}}
+      <button type="submit" id="postBtn" class="btn btn-success pull-right" style="margin-top: 1.5em; float:
+            left" >수정하기</button>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+{{> /layout/footer}}
