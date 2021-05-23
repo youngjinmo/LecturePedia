@@ -2,6 +2,7 @@ package com.devandy.studypedia.lecture;
 
 import com.devandy.studypedia.user.User;
 import com.devandy.studypedia.utils.HttpSessionUtils;
+import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,8 @@ public class LectureController {
     }
 
     @PostMapping("/lecture/registering")
-    public String registrationLecture(Lecture lecture) {
-        lectureService.addLecture(lecture);
+    public String registrationLecture(RequestSaveLectureDto requestSaveLectureDto) {
+        lectureService.addLecture(requestSaveLectureDto);
         return "redirect:/lecture/list";
     }
 
@@ -70,5 +71,16 @@ public class LectureController {
     public String updateLecture(@PathVariable Long id, RequestUpdateLectureDto requestUpdateLectureDto) {
         lectureService.updateLecture(id, requestUpdateLectureDto);
         return "redirect:/lecture/list";
+    }
+
+    @GetMapping("/lecture/delete/{id}")
+    public String deleteLecture(@PathVariable Long id, HttpSession session) {
+        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        Long authorId = lectureService.getLecture(id).getAuthor();
+        if(currentUser.getId().equals(authorId)) {
+            lectureService.deleteLecture(id);
+            return "redirect:/lecture/list";
+        }
+        return "redirect:/";
     }
 }

@@ -2,6 +2,7 @@ package com.devandy.studypedia.lecture;
 
 import com.devandy.studypedia.user.User;
 import com.devandy.studypedia.utils.HttpSessionUtils;
+import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,10 @@ public class LectureServiceImpl implements LectureService{
     private HttpSession session;
 
     @Override
-    public void addLecture(Lecture lecture) {
-        User sessionedUser = HttpSessionUtils.getUserFromSession(session);
-        lecture.setAuthor(sessionedUser.getId());
-        lectureRepository.save(lecture);
+    public void addLecture(RequestSaveLectureDto requestSaveLectureDto) {
+        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        requestSaveLectureDto.setAuthor(currentUser.getId());
+        lectureRepository.save(requestSaveLectureDto.toEntity());
     }
 
     @Override
