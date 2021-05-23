@@ -96,4 +96,25 @@ public class UserTest {
         User updatedUser = userRepository.findByEmail("test@gmail.com");
         assertEquals(requestUpdateUserDto.getPassword(),updatedUser.getPassword());
     }
+
+    @Test
+    @DisplayName("회원 삭제 테스트")
+    void deleteUser() {
+        // given
+        RequestSaveUserDto requestSaveUserDto = new RequestSaveUserDto();
+        String email = "test@gmail.com";
+        requestSaveUserDto.setEmail(email);
+        requestSaveUserDto.setUserName("test");
+        requestSaveUserDto.setPassword("password");
+        requestSaveUserDto.setRole(Role.USER);
+
+        userService.createUser(requestSaveUserDto);
+
+        // when
+        Long id = userRepository.findByEmail(email).getId();
+        userService.deleteUser(id);
+
+        // then
+        assertFalse(userRepository.existsById(id));
+    }
 }

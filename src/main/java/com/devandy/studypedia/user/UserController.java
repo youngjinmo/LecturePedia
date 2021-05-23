@@ -73,4 +73,15 @@ public class UserController {
         session.setAttribute(HttpSessionUtils.USER_SESSION_KEY,user);
         return "redirect:/";
     }
+
+    @GetMapping("/user/delete/{id}")
+    public String deleteUser(@PathVariable Long id, HttpSession session) {
+        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        if(currentUser.getId()!=id) {
+            return "redirect:/";
+        }
+        session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        userService.deleteUser(id);
+        return "redirect:/";
+    }
 }

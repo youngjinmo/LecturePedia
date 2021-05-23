@@ -11,5 +11,5 @@ public interface UserService {
     void updateUser(Long id, RequestUpdateUserDto requestUpdateUserDto);
     boolean emailValidation(String email);
     boolean validationLogin(String email, String password);
-
+    void deleteUser(Long id);
 }

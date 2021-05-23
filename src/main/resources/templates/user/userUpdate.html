@@ -11,10 +11,24 @@
             <label for="userName" style="margin-top: 1.2em;">닉네임</label>
             <input type="text" class="form-control" id="userName" name="userName" value="{{userName}}">
             {{/user}}
-            <button type="submit" id="updateBtn" class="btn btn-success pull-right" style="margin-top: 1.5em;">수정하기
+            <button type="submit" id="updateBtn" class="btn btn-success pull-right" style="margin-top: 1.5em; float:
+            left;">수정하기
             </button>
         </form>
+        <button type="submit" id="deleteBtn" class="btn btn-danger pull-right"
+                style="float: left; margin-top: 1.5em; margin-left: 1em;" onclick="deleteUser();">삭제하기
+        </button>
     </div>
 </div>
+
+<script>
+    function deleteUser() {
+        var userId = document.getElementById('userId').value;
+        var isDeleteUser = confirm("정말 삭제하시겠습니까?");
+        if(isDeleteUser){
+            window.location.href="/user/delete/"+userId;
+        }
+    }
+</script>
 
 {{> /layout/footer}}
