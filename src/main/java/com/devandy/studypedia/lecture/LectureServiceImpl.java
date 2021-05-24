@@ -1,13 +1,11 @@
 package com.devandy.studypedia.lecture;
 
-import com.devandy.studypedia.utils.HttpSessionUtils;
 import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,14 +54,6 @@ public class LectureServiceImpl implements LectureService{
             getLectures.add(lectureList.get(lectureList.size()-i));
         }
         return getLectures;
-    }
-
-    public boolean validationAuthorization(Lecture lecture, HttpSession session) {
-        if(HttpSessionUtils.getUserFromSession(session)!=null
-            && HttpSessionUtils.getUserFromSession(session).getId().equals(lecture.getAuthor())) {
-            return true;
-        }
-        return false;
     }
 
     @Override
