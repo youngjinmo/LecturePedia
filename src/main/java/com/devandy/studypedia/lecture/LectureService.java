@@ -12,6 +12,7 @@ public interface LectureService {
     Lecture getLecture(Long id);
     void updateLecture(Long id, RequestUpdateLectureDto requestUpdateLectureDto);
     void deleteLecture(Long id);
+    boolean hasAuthority(Long lectureId, Long currentUserId);
     List<Lecture> getLatestAddedLecture(int count);
     List<Lecture> showLecturesMain();
 

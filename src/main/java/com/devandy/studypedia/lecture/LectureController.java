@@ -52,8 +52,8 @@ public class LectureController {
         model.addAttribute("lecture",lecture);
 
         User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        if(currentUser!=null && currentUser.getId().equals(lecture.getAuthor())) {
-            model.addAttribute("isCurrentUserAuthor",currentUser);
+        if(currentUser!=null && lectureService.hasAuthority(id, currentUser.getId())){
+            model.addAttribute("authority", true);
         }
         return "lecture/detailLecture";
     }
@@ -73,9 +73,8 @@ public class LectureController {
 
     @GetMapping("/lecture/delete/{id}")
     public String deleteLecture(@PathVariable Long id, HttpSession session) {
-        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        Long authorId = lectureService.getLecture(id).getAuthor();
-        if(currentUser.getId().equals(authorId)) {
+        Long currentUserId = ((User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)).getId();
+        if(lectureService.hasAuthority(id, currentUserId)) {
             lectureService.deleteLecture(id);
             return "redirect:/lecture/list";
         }

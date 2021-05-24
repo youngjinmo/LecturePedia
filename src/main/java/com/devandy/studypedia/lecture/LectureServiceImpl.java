@@ -1,5 +1,8 @@
 package com.devandy.studypedia.lecture;
 
+import com.devandy.studypedia.user.Role;
+import com.devandy.studypedia.user.User;
+import com.devandy.studypedia.user.UserRepository;
 import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import lombok.NoArgsConstructor;
@@ -15,6 +18,9 @@ public class LectureServiceImpl implements LectureService{
 
     @Autowired
     private LectureRepository lectureRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void addLecture(RequestSaveLectureDto requestSaveLectureDto, Long authorId) {
@@ -44,6 +50,13 @@ public class LectureServiceImpl implements LectureService{
     public void deleteLecture(Long id) {
         Lecture targetLecture = lectureRepository.findById(id).get();
         lectureRepository.delete(targetLecture);
+    }
+
+    @Override
+    public boolean hasAuthority(Long lectureId, Long currentUserId) {
+        Lecture targetLecture = lectureRepository.findById(lectureId).get();
+        User currentUser = userRepository.findById(currentUserId).get();
+        return currentUserId.equals(targetLecture.getAuthor()) || currentUser.getRole().equals(Role.ADMIN);
     }
 
     @Override

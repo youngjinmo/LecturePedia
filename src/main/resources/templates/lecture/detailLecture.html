@@ -33,14 +33,14 @@
     <a href="/lecture/list">
       <button class="btn btn-success pull-right" style="margin-top: 1em; float: left;">목록으로</button>
     </a>
-    {{#isCurrentUserAuthor}}
+    {{#authority}}
     <a href="/lecture/update/{{lecture.id}}">
       <button class="btn btn-success pull-right" style="float: left; margin-top: 1em; margin-left: 1em">수정하기</button>
     </a>
     <button class="btn btn-danger pull-right"
             style="margin-top: 1em; margin-left: 1em"
             onclick="deleteLecture();">삭제하기</button>
-    {{/isCurrentUserAuthor}}
+    {{/authority}}
     {{/lecture}}
   </div>
 </div>
