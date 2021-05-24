@@ -28,6 +28,16 @@ public class UserTest {
         userRepository.deleteAll();
     }
 
+    private void addUserOne(String email, String userName, String password) {
+        RequestSaveUserDto requestSaveUserDto = new RequestSaveUserDto();
+        requestSaveUserDto.setEmail(email);
+        requestSaveUserDto.setUserName(userName);
+        requestSaveUserDto.setPassword(password);
+        requestSaveUserDto.setRole(Role.USER);
+
+        userService.createUser(requestSaveUserDto);
+    }
+
     @Test
     @DisplayName("회원가입 테스트")
     void createUser() {
@@ -36,6 +46,7 @@ public class UserTest {
         requestSaveUserDto.setEmail("youngjinmo@gmail.com");
         requestSaveUserDto.setUserName("DevAndy");
         requestSaveUserDto.setPassword("1q2w3e4r");
+        requestSaveUserDto.setRole(Role.USER);
 
         // when
         userService.createUser(requestSaveUserDto);
@@ -49,31 +60,19 @@ public class UserTest {
     @DisplayName("패스워드 암호화 테스트")
     void encodePassword() {
         // given
-        String email = "test@gmail.com";
-        String rawPassword = "12345678";
-
-        RequestSaveUserDto requestSaveUserDto = new RequestSaveUserDto();
-        requestSaveUserDto.setEmail(email);
-        requestSaveUserDto.setUserName("test");
-        requestSaveUserDto.setPassword(rawPassword);
-        requestSaveUserDto.setRole(Role.USER);
-
-        RequestSaveUserDto requestSaveUserDto2 = new RequestSaveUserDto();
-        requestSaveUserDto2.setEmail("test@daum.net");
-        requestSaveUserDto2.setUserName("test2");
-        requestSaveUserDto2.setPassword(rawPassword);
-        requestSaveUserDto2.setRole(Role.USER);
+        String rawPassword1 = "12345678";
+        String rawPassword2 = "@12345678!";
+        addUserOne("test@gmail.com", "test", rawPassword1);
+        addUserOne("test2@gmail.com", "test2", rawPassword2);
 
         // when
-        userService.createUser(requestSaveUserDto);
-        userService.createUser(requestSaveUserDto2);
-        String encodedPassword = userRepository.findByEmail(email).getPassword();
-        String encodedPassword2 = userRepository.findByEmail("test@daum.net").getPassword();
+        String encodedPassword = userRepository.findByEmail("test@gmail.com").getPassword();
+        String encodedPassword2 = userRepository.findByEmail("test2@gmail.com").getPassword();
 
         // then
         assertAll(
-                () -> assertTrue(passwordEncoder.matches(rawPassword,encodedPassword)),
-                () -> assertTrue(passwordEncoder.matches(rawPassword,encodedPassword2)),
+                () -> assertTrue(passwordEncoder.matches(rawPassword1,encodedPassword)),
+                () -> assertTrue(passwordEncoder.matches(rawPassword2,encodedPassword2)),
                 () -> assertNotEquals(encodedPassword, encodedPassword2)
         );
     }
@@ -82,41 +81,29 @@ public class UserTest {
     @DisplayName("사용자 정보 수정 테스트")
     void updateUser() {
         // given
-        RequestSaveUserDto requestSaveUserDto = new RequestSaveUserDto();
-        requestSaveUserDto.setEmail("test@gmail.com");
-        requestSaveUserDto.setUserName("test");
-        requestSaveUserDto.setPassword("12345678");
-        requestSaveUserDto.setRole(Role.USER);
-
-        RequestUpdateUserDto requestUpdateUserDto = new RequestUpdateUserDto();
-        requestUpdateUserDto.setEmail(requestSaveUserDto.getEmail());
-        requestUpdateUserDto.setUserName("updateUser");
+        addUserOne("test@gmail.com", "test", "password");
+        Long targetId = userRepository.findByEmail("test@gmail.com").getId();
 
         // when
-        userService.createUser(requestSaveUserDto);
-        Long id = userRepository.findByEmail(requestSaveUserDto.getEmail()).getId();
-        userService.updateUser(id, requestUpdateUserDto);
+        RequestUpdateUserDto requestUpdateUserDto = new RequestUpdateUserDto();
+        requestUpdateUserDto.setEmail("test@naver.com");
+        requestUpdateUserDto.setUserName("updateUser");
+        requestUpdateUserDto.setPassword("password!");
+        userService.updateUser(targetId, requestUpdateUserDto);
 
         // then
-        User updatedUser = userRepository.findByEmail("test@gmail.com");
-        assertEquals(requestUpdateUserDto.getUserName(),updatedUser.getUserName());
+        User updatedUser = userRepository.findByEmail("test@naver.com");
+        assertEquals("updateUser",updatedUser.getUserName());
     }
 
     @Test
     @DisplayName("회원 삭제 테스트")
     void deleteUser() {
         // given
-        RequestSaveUserDto requestSaveUserDto = new RequestSaveUserDto();
-        String email = "test@gmail.com";
-        requestSaveUserDto.setEmail(email);
-        requestSaveUserDto.setUserName("test");
-        requestSaveUserDto.setPassword("password");
-        requestSaveUserDto.setRole(Role.USER);
-
-        userService.createUser(requestSaveUserDto);
+        addUserOne("test@gmail.com", "test", "password");
 
         // when
-        Long id = userRepository.findByEmail(email).getId();
+        Long id = userRepository.findByEmail("test@gmail.com").getId();
         userService.deleteUser(id);
 
         // then
