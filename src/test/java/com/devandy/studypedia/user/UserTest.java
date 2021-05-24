@@ -2,6 +2,7 @@ package com.devandy.studypedia.user;
 
 import com.devandy.studypedia.web.dto.user.RequestSaveUserDto;
 import com.devandy.studypedia.web.dto.user.RequestUpdateUserDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class UserTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @AfterEach
+    void deleteUserAfterTest() {
+        userRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("회원가입 테스트")
@@ -84,8 +90,7 @@ public class UserTest {
 
         RequestUpdateUserDto requestUpdateUserDto = new RequestUpdateUserDto();
         requestUpdateUserDto.setEmail(requestSaveUserDto.getEmail());
-        requestUpdateUserDto.setUserName("test");
-        requestUpdateUserDto.setPassword("12345679");
+        requestUpdateUserDto.setUserName("updateUser");
 
         // when
         userService.createUser(requestSaveUserDto);
@@ -94,7 +99,7 @@ public class UserTest {
 
         // then
         User updatedUser = userRepository.findByEmail("test@gmail.com");
-        assertEquals(requestUpdateUserDto.getPassword(),updatedUser.getPassword());
+        assertEquals(requestUpdateUserDto.getUserName(),updatedUser.getUserName());
     }
 
     @Test
