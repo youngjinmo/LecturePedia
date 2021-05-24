@@ -1,28 +1,26 @@
 package com.devandy.studypedia.lecture;
 
-import com.devandy.studypedia.user.User;
 import com.devandy.studypedia.utils.HttpSessionUtils;
 import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Service
 public class LectureServiceImpl implements LectureService{
 
     @Autowired
     private LectureRepository lectureRepository;
 
-    @Autowired
-    private HttpSession session;
-
     @Override
-    public void addLecture(RequestSaveLectureDto requestSaveLectureDto) {
-        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        requestSaveLectureDto.setAuthor(currentUser.getId());
+    public void addLecture(RequestSaveLectureDto requestSaveLectureDto, Long authorId) {
+        requestSaveLectureDto.setAuthor(authorId);
         lectureRepository.save(requestSaveLectureDto.toEntity());
     }
 
@@ -48,6 +46,16 @@ public class LectureServiceImpl implements LectureService{
     public void deleteLecture(Long id) {
         Lecture targetLecture = lectureRepository.findById(id).get();
         lectureRepository.delete(targetLecture);
+    }
+
+    @Override
+    public List<Lecture> getLatestAddedLecture(int count) {
+        List<Lecture> lectureList = lectureRepository.findAll();
+        List<Lecture> getLectures = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            getLectures.add(lectureList.get(lectureList.size()-i));
+        }
+        return getLectures;
     }
 
     public boolean validationAuthorization(Lecture lecture, HttpSession session) {

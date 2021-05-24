@@ -19,11 +19,8 @@ public class LectureController {
     @Autowired
     private LectureService lectureService;
 
-    @Autowired
-    private HttpSession session;
-
     @GetMapping("/lecture/register")
-    public String registerFormLecture() {
+    public String registerFormLecture(HttpSession session) {
         if(session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)==null) {
             return "redirect:/user/login";
         }
@@ -31,8 +28,9 @@ public class LectureController {
     }
 
     @PostMapping("/lecture/registering")
-    public String registrationLecture(RequestSaveLectureDto requestSaveLectureDto) {
-        lectureService.addLecture(requestSaveLectureDto);
+    public String registrationLecture(RequestSaveLectureDto requestSaveLectureDto, HttpSession session) {
+        User author = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+        lectureService.addLecture(requestSaveLectureDto, author.getId());
         return "redirect:/lecture/list";
     }
 
