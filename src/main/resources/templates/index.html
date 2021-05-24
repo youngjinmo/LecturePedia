@@ -11,43 +11,53 @@
                 <a class="btn btn-primary btn-lg" style="margin-left: 1em"
                    href="/lecture/list">강의 보러가기</a>
             </header>
-            <!-- default images-->
+
             <div class="row text-center">
+                {{#latestLectures}}
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card h-100">
-                        <img class="card-img-top" src="https://cdn.inflearn.com/wp-content/uploads/web_mvc7.jpg" alt="..." />
                         <div class="card-body">
-                            <h4 class="card-title">스프링 MVC</h4>
-                            <p class="card-text">이 강좌는 자바 서블릿(Servlet) 기반의 MVC 프레임워크인 스프링 웹 MVC(이하 스프링 MVC)에 대해
-                                학습합니다.</p>
+                            <h4 class="card-title">{{title}}</h4>
+                            <p class="card-text">{{description}}</p>
                         </div>
-                        <div class="card-footer"><a class="btn btn-primary"
-                                                    href="https://www.inflearn.com/course/%EC%9B%B9-mvc#"
-                                                    target="_blank">강의 보러가기</a></div>
+                        <div class="card-footer">
+                            <a class="btn btn-primary"
+                                href="{{lectureUrl}}"
+                                target="_blank">강의 보러가기</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="https://cdn.inflearn.com/public/course-325969-cover/87c7e5e9-759d-451c-b6df-f5700b25a044" alt="..." />
-                        <div class="card-body">
-                            <h4 class="card-title">스프링 핵심원리 기본편</h4>
-                            <p class="card-text">다음 단계의 백엔드 개발자로 성장하려면, 스프링이 제공하는 핵심 가치와 원리를 반드시 깊이있게 이해해야 합니다.</p>
-                        </div>
-                        <div class="card-footer"><a class="btn btn-primary"
-                                                    href="https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8" target="_blank">강의 보러가기</a></div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="https://cdn.inflearn.com/public/courses/324474/course_cover/58c8632c-7a6e-4c76-9893-d7fffa32faf2/kyh_JPA_Spring2%20%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%206.png" alt="..." />
-                        <div class="card-body">
-                            <h4 class="card-title">실전! 스프링 데이터 JPA</h4>
-                            <p class="card-text">스프링 데이터 JPA는 기존의 한계를 넘어 마치 마법처럼, 리포지토리에 구현 클래스 없이 인터페이스 만으로 개발을 완료할 수 있습니다. 스프링 데이터 JPA 실무 노하우를 전해드립니다.</p>
-                        </div>
-                        <div class="card-footer"><a class="btn btn-primary"
-                                                    href="https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%EC%8B%A4%EC%A0%84#" target="_blank">강의 보러가기</a></div>
-                    </div>
-                </div>
+                {{/latestLectures}}
+                {{^latestLectures}}
+                <p style="margin-left: 50%; margin-top: 2em; margin-bottom: 2em">
+                    아직 등록된 강의가 없습니다.
+                </p>
+                {{/latestLectures}}
+
+
+<!--                <div class="col-lg-3 col-md-6 mb-4">-->
+<!--                    <div class="card h-100">-->
+<!--                        <img class="card-img-top" src="https://cdn.inflearn.com/public/course-325969-cover/87c7e5e9-759d-451c-b6df-f5700b25a044" alt="..." />-->
+<!--                        <div class="card-body">-->
+<!--                            <h4 class="card-title">스프링 핵심원리 기본편</h4>-->
+<!--                            <p class="card-text">다음 단계의 백엔드 개발자로 성장하려면, 스프링이 제공하는 핵심 가치와 원리를 반드시 깊이있게 이해해야 합니다.</p>-->
+<!--                        </div>-->
+<!--                        <div class="card-footer"><a class="btn btn-primary"-->
+<!--                                                    href="https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%ED%95%B5%EC%8B%AC-%EC%9B%90%EB%A6%AC-%EA%B8%B0%EB%B3%B8%ED%8E%B8" target="_blank">강의 보러가기</a></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-lg-3 col-md-6 mb-4">-->
+<!--                    <div class="card h-100">-->
+<!--                        <img class="card-img-top" src="https://cdn.inflearn.com/public/courses/324474/course_cover/58c8632c-7a6e-4c76-9893-d7fffa32faf2/kyh_JPA_Spring2%20%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%206.png" alt="..." />-->
+<!--                        <div class="card-body">-->
+<!--                            <h4 class="card-title">실전! 스프링 데이터 JPA</h4>-->
+<!--                            <p class="card-text">스프링 데이터 JPA는 기존의 한계를 넘어 마치 마법처럼, 리포지토리에 구현 클래스 없이 인터페이스 만으로 개발을 완료할 수 있습니다. 스프링 데이터 JPA 실무 노하우를 전해드립니다.</p>-->
+<!--                        </div>-->
+<!--                        <div class="card-footer"><a class="btn btn-primary"-->
+<!--                                                    href="https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%EC%8B%A4%EC%A0%84#" target="_blank">강의 보러가기</a></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
             </div>
         </div>
 {{> /layout/footer}}

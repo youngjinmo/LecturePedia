@@ -30,12 +30,12 @@ public class TestDatas {
         userRepository.save(userDto.toEntity());
     }
 
-    public void addLectures(String title, String creator, Long authorId, String content, String lectureUrl) {
+    public void addLectures(String title, String creator, Long authorId, String description, String lectureUrl) {
         RequestSaveLectureDto lectureDto1 = new RequestSaveLectureDto();
         lectureDto1.setTitle(title);
         lectureDto1.setCreator(creator);
         lectureDto1.setAuthor(authorId);
-        lectureDto1.setDescription(content);
+        lectureDto1.setDescription(description);
         lectureDto1.setLectureUrl(lectureUrl);
         lectureRepository.save(lectureDto1.toEntity());
     }

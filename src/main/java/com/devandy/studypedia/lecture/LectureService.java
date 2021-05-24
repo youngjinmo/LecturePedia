@@ -13,6 +13,7 @@ public interface LectureService {
     void updateLecture(Long id, RequestUpdateLectureDto requestUpdateLectureDto);
     void deleteLecture(Long id);
     List<Lecture> getLatestAddedLecture(int count);
+    List<Lecture> showLecturesMain();
 
     List<Lecture> findAll();
 }

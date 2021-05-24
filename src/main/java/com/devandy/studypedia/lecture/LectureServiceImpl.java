@@ -57,6 +57,18 @@ public class LectureServiceImpl implements LectureService{
     }
 
     @Override
+    public List<Lecture> showLecturesMain() {
+        int lecturesCount = (int) lectureRepository.count();
+        int lecturesMain = 0;
+        if(lecturesCount>0 && lecturesCount<=4) {
+            lecturesMain = lecturesCount;
+        } else if(lecturesCount>4){
+            lecturesMain = 4;
+        }
+        return getLatestAddedLecture(lecturesMain);
+    }
+
+    @Override
     public List<Lecture> findAll() {
         return lectureRepository.findAll();
     }
