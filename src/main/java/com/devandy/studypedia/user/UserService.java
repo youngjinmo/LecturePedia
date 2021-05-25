@@ -9,7 +9,7 @@ public interface UserService {
     void createUser(RequestSaveUserDto requestSaveUserDto);
     boolean isAvaliableUpdateUser(Long id, HttpSession session);
     void updateUser(Long id, RequestUpdateUserDto requestUpdateUserDto);
-    boolean emailValidation(String email);
-    boolean validationLogin(String email, String password);
+    boolean validationEmail(String email);
+    boolean validationPasswordByLogin(String email, String password);
     void deleteUser(Long id);
 }

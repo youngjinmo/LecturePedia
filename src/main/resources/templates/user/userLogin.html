@@ -1,21 +1,92 @@
 {{> /layout/navigation }}
 
-<div class="container" style="padding-top: 4%;">
-    <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 5%;">
+<div class="container" style="padding-top: 3%; padding-bottom: 15%;">
+    <div id="formDiv" style="padding-left: 25%; padding-right: 25%; padding-bottom: 5%;">
         <h2 style="margin-bottom: 1em">로그인</h2>
-        <form name="question" method="post" action="/user/loginProc">
+        <form name="loginForm" method="post" action="/user/loginProc">
             <label for="email">이메일</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요">
             <label for="password" style="margin-top: 1.2em;">비밀번호</label>
             <input type="password" class="form-control" id="password" name="password"
                    placeholder="비밀번호를 입력해주세요">
-            <button type="submit" class="btn btn-success pull-right" style="margin-top: 3em;">로그인</button>
-            <a href="/user/signup">
+            <button class="btn btn-success pull-right"
+                    style="margin-top: 1.5em;"
+                    onclick="validationLogin();"
+                    type="button">로그인</button>
+            <a href="/signup">
                 <button type="button" class="btn btn-secondary pull-right"
-                        style="margin-left: 1em; margin-top: 3em;">회원가입</button>
+                        style="margin-left: 1em; margin-top: 1.5em;">회원가입</button>
             </a>
         </form>
     </div>
 </div>
+
+<script>
+    function validationLogin() {
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let loginForm = document.loginForm;
+
+        console.log('email : '+email);
+        console.log('password : '+password);
+
+        if(wrongEmail(email)) {
+            alert("이메일을 잘못 입력하였습니다.");
+        } else if (wrongPassword(email, password)){
+            alert("비밀번호를 잘못 입력하였습니다.");
+        } else {
+            alert("Welcome back!");
+            loginForm.submit();
+        }
+    }
+
+    function wrongEmail(email) {
+        let result = false;
+        $.ajax({
+            type: 'POST',
+            url: '/user/emailChk',
+            async: false,
+            data: email,
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){
+                if(data){
+                    result = true;
+                }
+            },
+            error: function(error){
+                alert("이메일 검증 오류 !!");
+                alert(error);
+            }
+        });
+        return result;
+    }
+
+    function wrongPassword(email, password) {
+        let result = true;
+
+        $.ajax({
+            type: 'POST',
+            url: '/user/passwordChk',
+            async: false,
+            dataType: 'html',
+            data: {
+                'email': email,
+                'password': password
+            },
+            success: function(data) {
+                if(data) {
+                    result = false;
+                } else {
+                }
+            },
+            error: function(error){
+                alert("비밀번호 검증 오류 !!");
+                alert(error);
+            }
+        });
+        return result;
+    }
+</script>
 
 {{> /layout/footer}}

@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/user/loginProc")
-    public String loginProcess(String email, String password, HttpSession session) {
+    public String loginProcess(String email, HttpSession session) {
         User loginUser = userRepository.findByEmail(email);
         if(userService.validationLogin(email, password)) {
             session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
@@ -45,14 +45,19 @@ public class UserController {
     @PostMapping("/user/signupProc")
     public String signUpProcess(RequestSaveUserDto requestSaveUserDto) {
         userService.createUser(requestSaveUserDto);
-        System.out.println("회원가입!! : user.getEmail()");
         return "redirect:/user/login";
     }
 
     @ResponseBody
     @RequestMapping(value = "/user/emailChk", method = RequestMethod.POST)
-    public boolean emailChk(@RequestBody String email) {
-        return userService.emailValidation(email);
+    public boolean isEmailAvailableToCreate(@RequestBody String email) {
+        return userService.validationEmail(email);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/user/passwordChk", method = RequestMethod.POST)
+    public boolean validationPasswordByLogin(@RequestParam String email, @RequestParam String password) {
+        return userService.validationPasswordByLogin(email, password);
     }
 
     @GetMapping("/user/{id}")
