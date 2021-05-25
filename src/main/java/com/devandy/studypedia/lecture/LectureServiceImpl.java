@@ -25,6 +25,7 @@ public class LectureServiceImpl implements LectureService{
     @Override
     public void addLecture(RequestSaveLectureDto requestSaveLectureDto, Long authorId) {
         requestSaveLectureDto.setAuthor(authorId);
+        requestSaveLectureDto.setViews(0L);
         lectureRepository.save(requestSaveLectureDto.toEntity());
     }
 
@@ -79,6 +80,13 @@ public class LectureServiceImpl implements LectureService{
             lecturesMain = 4;
         }
         return getLatestAddedLecture(lecturesMain);
+    }
+
+    @Override
+    public void increaseViewCount(Long id) {
+        Lecture targetLecture = getLecture(id);
+        targetLecture.setViews(targetLecture.getViews()+1);
+        lectureRepository.save(targetLecture);
     }
 
     @Override

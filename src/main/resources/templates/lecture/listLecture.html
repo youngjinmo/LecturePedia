@@ -1,5 +1,14 @@
 {{> /layout/navigation }}
 
+<style>
+  .container table tr th {
+    text-align: center; vertical-align: middle;
+  }
+  .container table tr td {
+    text-align: center; vertical-align: middle;
+  }
+</style>
+
 <div class="container" style="min-height: 540px; margin-top: 5%; text-align: center;">
   <h2 style="margin-bottom: 1em">강의 목록</h2>
   <table class="table table-hover">
@@ -7,19 +16,21 @@
     <tr>
       <th>강의 번호</th>
       <th>강의명</th>
-      <th>강의자</th>
-      <th>등록자</th>
+      <th style="min-width: 5em;">강의자</th>
+      <th style="min-width: 5em;">등록자</th>
       <th>등록일</th>
+      <th>조회수</th>
     </tr>
     </thead>
     <tbody>
     {{#lectures}}
     <tr>
       <td>{{id}}</td>
-      <td><a href="/lecture/{{id}}">{{title}}</a></td>
+      <td style="text-align: left;"><a href="/lecture/{{id}}">{{title}}</a></td>
       <td>{{creator}}</td>
       <td>{{author}}</td>
       <td>{{firstCreatedDate}}</td>
+      <td>{{views}}</td>
     </tr>
     {{/lectures}}
     </tbody>

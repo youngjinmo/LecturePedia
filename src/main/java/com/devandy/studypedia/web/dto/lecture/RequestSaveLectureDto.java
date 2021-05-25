@@ -16,14 +16,17 @@ public class RequestSaveLectureDto {
     private String description;
     private Long author;
     private String lectureUrl;
+    private Long views;
 
     @Builder
-    public RequestSaveLectureDto(String title, String creator, String description, Long author, String lectureUrl) {
+    public RequestSaveLectureDto(String title, String creator, String description,
+                                 Long author, String lectureUrl, Long views) {
         this.title = title;
         this.creator = creator;
         this.description = description;
         this.author = author;
         this.lectureUrl = lectureUrl;
+        this.views = views;
     }
 
     public Lecture toEntity() {
@@ -33,6 +36,7 @@ public class RequestSaveLectureDto {
                 .description(description)
                 .author(author)
                 .lectureUrl(lectureUrl)
+                .views(views)
                 .build();
     }
 }

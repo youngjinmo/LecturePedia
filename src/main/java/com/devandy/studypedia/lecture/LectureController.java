@@ -48,6 +48,7 @@ public class LectureController {
         if(session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)==null) {
             return "redirect:/login";
         }
+        lectureService.increaseViewCount(id);
         Lecture lecture = lectureService.getLecture(id);
         model.addAttribute("lecture",lecture);
 

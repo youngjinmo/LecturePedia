@@ -30,12 +30,16 @@ public class Lecture extends BaseTimeEntity {
     @Column(nullable = false)
     private String lectureUrl;
 
+    @Column
+    private Long views;
+
     @Builder
-    public Lecture(String title, String creator, String description, Long author, String lectureUrl) {
+    public Lecture(String title, String creator, String description, Long author, String lectureUrl, Long views) {
         this.title = title;
         this.creator = creator;
         this.description = description;
         this.author = author;
         this.lectureUrl = lectureUrl;
+        this.views = views;
     }
 }
