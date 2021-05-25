@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -59,5 +61,17 @@ public class UserServiceImpl implements UserService {
         User targetUser = userRepository.findById(id).get();
         userRepository.delete(targetUser);
 
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();
+        List<User> usersExceptAdmin = new ArrayList<>();
+        for (User user : allUsers) {
+            if(user.getRole().equals(Role.USER)) {
+                usersExceptAdmin.add(user);
+            }
+        }
+        return usersExceptAdmin;
     }
 }

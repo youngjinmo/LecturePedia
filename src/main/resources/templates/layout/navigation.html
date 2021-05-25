@@ -24,6 +24,9 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
         <li class="nav-item"><a class="nav-link" href="/lecture/list">Lectures</a></li>
+        {{#admin}}
+        <li class="nav-item"><a class="nav-link" href="/user/list">Users</a></li>
+        {{/admin}}
         {{^sessionedUser}}
         <li class="nav-item"><a class="nav-link" href="/signup">Signup</a></li>
         {{/sessionedUser}}

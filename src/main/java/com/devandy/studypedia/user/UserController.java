@@ -75,12 +75,31 @@ public class UserController {
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable Long id, HttpSession session) {
-        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        if(currentUser.getId()!=id) {
+        if(!HttpSessionUtils.isLoginUser(session)) {
             return "redirect:/";
         }
-        session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        userService.deleteUser(id);
+        User currentUser = HttpSessionUtils.getUserFromSession(session);
+        if(currentUser.getId().equals(id)) {
+            session.removeAttribute(HttpSessionUtils.USER_SESSION_KEY);
+            userService.deleteUser(id);
+            return "redirect:/";
+        }
+        if(HttpSessionUtils.hasRoleLoginUser(session, Role.ADMIN)) {
+            userService.deleteUser(id);
+            return "redirect:/user/list";
+        }
+        return "redirect:/login";
+    }
+
+    @GetMapping("/user/list")
+    public String userList(HttpSession session, Model model) {
+        if(!HttpSessionUtils.isLoginUser(session)) {
+            return "redirect:/login";
+        }
+        if(HttpSessionUtils.hasRoleLoginUser(session, Role.ADMIN)) {
+            model.addAttribute("users",userService.getAllUsers());
+            return "user/userList";
+        }
         return "redirect:/";
     }
 }

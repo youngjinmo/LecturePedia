@@ -1,0 +1,64 @@
+{{> /layout/navigation }}
+
+<style>
+  .container table tr th {
+    text-align: center; vertical-align: middle;
+  }
+  .container table tr td {
+    text-align: center; vertical-align: middle;
+  }
+</style>
+
+<div class="container" style="min-height: 540px; margin-top: 5%; text-align: center;">
+  <h2 style="margin-bottom: 1em">사용자 목록</h2>
+  <table id="userList" class="table table-hover">
+    <thead>
+    <tr>
+      <th>사용자 id</th>
+      <th>이메일</th>
+      <th>사용자명</th>
+      <th>권한</th>
+      <th style="width: 20%">가입일</th>
+      <th style="width: 20%">최근 접속일</th>
+      <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#users}}
+    <tr>
+      <td id="userId">{{id}}</td>
+      <td>{{email}}</td>
+      <td>{{userName}}</td>
+      <td>{{role}}</td>
+      <td>{{firstCreatedDate}}</td>
+      <td>{{lastModifiedDate}}</td>
+      <td>
+        <button class="btn btn-danger pull-right"
+                type="button" onclick="deleteUser();">삭제</button>
+      </td>
+    </tr>
+    {{/users}}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function deleteUser() {
+    let userList = document.getElementById('userList');
+    let userId = null;
+
+    for (let i = 1; i < userList.rows.length; i++) {
+      userList.rows[i].cells[6].onclick = function () {
+        userId = userList.rows[i].cells[0].innerText;
+        userName = userList.rows[i].cells[2].innerText;
+
+        let isDeleteUser = confirm("정말 "+userName+"을 삭제하시겠습니까");
+        if(isDeleteUser) {
+          alert("삭제하였습니다!");
+          window.location.href="/user/delete/"+userId;
+        }
+      }
+    }
+  }
+</script>
+{{> /layout/footer}}

@@ -4,6 +4,7 @@ import com.devandy.studypedia.web.dto.user.RequestSaveUserDto;
 import com.devandy.studypedia.web.dto.user.RequestUpdateUserDto;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface UserService {
     void createUser(RequestSaveUserDto requestSaveUserDto);
@@ -12,4 +13,5 @@ public interface UserService {
     boolean validationEmail(String email);
     boolean validationPasswordByLogin(String email, String password);
     void deleteUser(Long id);
+    List<User> getAllUsers();
 }
