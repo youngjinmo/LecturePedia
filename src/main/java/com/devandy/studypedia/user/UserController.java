@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/user/login")
+    @GetMapping("/login")
     public String loginPage() {
         return "user/userLogin";
     }
@@ -27,17 +27,11 @@ public class UserController {
     @PostMapping("/user/loginProc")
     public String loginProcess(String email, HttpSession session) {
         User loginUser = userRepository.findByEmail(email);
-        if(userService.validationLogin(email, password)) {
-            session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
-            System.out.println("로그인 !! : "+email);
-            System.out.println(loginUser.getLastModifiedDate());
-            return "redirect:/";
-        } else {
-            return "redirect:/user/userLogin";
-        }
+        session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
+        return "redirect:/";
     }
 
-    @GetMapping("/user/signup")
+    @GetMapping("/signup")
     public String signupPage() {
         return "user/userCreate";
     }
@@ -45,7 +39,7 @@ public class UserController {
     @PostMapping("/user/signupProc")
     public String signUpProcess(RequestSaveUserDto requestSaveUserDto) {
         userService.createUser(requestSaveUserDto);
-        return "redirect:/user/login";
+        return "redirect:/login";
     }
 
     @ResponseBody

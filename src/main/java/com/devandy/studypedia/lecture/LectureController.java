@@ -22,7 +22,7 @@ public class LectureController {
     @GetMapping("/lecture/register")
     public String registerFormLecture(HttpSession session) {
         if(session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)==null) {
-            return "redirect:/user/login";
+            return "redirect:/login";
         }
         return "lecture/addLecture";
     }
@@ -46,7 +46,7 @@ public class LectureController {
     @GetMapping("/lecture/{id}")
     public String getLecture(@PathVariable Long id, Model model, HttpSession session) {
         if(session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)==null) {
-            return "redirect:/user/login";
+            return "redirect:/login";
         }
         Lecture lecture = lectureService.getLecture(id);
         model.addAttribute("lecture",lecture);

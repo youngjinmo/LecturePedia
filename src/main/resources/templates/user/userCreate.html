@@ -1,9 +1,9 @@
 {{> /layout/navigation }}
 
-<div class="container" style="padding-top: 4%;">
-    <div id="loginForm" style="padding-left: 25%; padding-right: 25%; padding-bottom: 5%;">
+<div class="container" style="padding-top: 3%;">
+    <div id="formDiv" style="padding-left: 25%; padding-right: 25%; padding-bottom: 5%;">
         <h2 style="margin-bottom: 1em">회원가입</h2>
-        <form name="question" method="post" action="/user/signupProc">
+        <form name="signupForm" method="post" action="/user/signupProc">
             <label for="email">이메일</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요">
             <label for="userName" style="margin-top: 1.2em;">닉네임</label>
