@@ -20,19 +20,28 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(HttpSession session) {
+        if(HttpSessionUtils.isLoginUser(session)) {
+            return "redirect:/";
+        }
         return "user/userLogin";
     }
 
     @PostMapping("/user/loginProc")
     public String loginProcess(String email, HttpSession session) {
         User loginUser = userRepository.findByEmail(email);
+        if(loginUser.getRole().equals(Role.ADMIN)) {
+            session.setAttribute(HttpSessionUtils.ADMIN_SESSION_KEY, loginUser);
+        }
         session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, loginUser);
         return "redirect:/";
     }
 
     @GetMapping("/signup")
-    public String signupPage() {
+    public String signupPage(HttpSession session) {
+        if(HttpSessionUtils.isLoginUser(session)) {
+            return "redirect:/";
+        }
         return "user/userCreate";
     }
 
@@ -57,7 +66,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public String userProfile(@PathVariable Long id, Model model, HttpSession session) {
         if(userService.isAvaliableUpdateUser(id, session)) {
-            User user = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+            User user = HttpSessionUtils.getUserFromSession(session);
             model.addAttribute("user",user);
             model.addAttribute("id",user.getId());
             return "user/userUpdate";
