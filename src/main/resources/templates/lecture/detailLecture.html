@@ -47,8 +47,8 @@
 
 <script>
   function deleteLecture() {
-     var lectureId = document.getElementById('lectureId').value;
-     var isDeleteLecture = confirm("정말 삭제하시겠습니까?");
+     let lectureId = document.getElementById('lectureId').value;
+     let isDeleteLecture = confirm("정말 삭제하시겠습니까?");
      if(isDeleteLecture) {
        window.location.href="/lecture/delete/"+lectureId;
      }

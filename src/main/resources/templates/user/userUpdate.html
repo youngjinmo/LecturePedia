@@ -23,8 +23,8 @@
 
 <script>
     function deleteUser() {
-        var userId = document.getElementById('userId').value;
-        var isDeleteUser = confirm("정말 삭제하시겠습니까?");
+        let userId = document.getElementById('userId').value;
+        let isDeleteUser = confirm("정말 삭제하시겠습니까?");
         if(isDeleteUser){
             window.location.href="/user/delete/"+userId;
         }

@@ -19,22 +19,23 @@
             <div style="float: right;">
                 <button type="button" class="btn btn-outline-danger" onclick="validationPw()">비밀번호 확인</button>
             </div>
-            <button type="submit" id="signUpBtn" class="btn btn-success pull-right" style="margin-top: 3em; float:
-            left" onclick="welcome()" disabled>회원가입</button>
-            <a href="/user/login"><button type="button" class="btn btn-secondary pull-right"
-                     style="margin-left: 1em; margin-top: 3em;">로그인</button></a>
+            <button type="submit" id="signUpBtn" class="btn btn-success pull-right"
+                    style="margin-top: 1.5em; float: left"
+                    onclick="welcome()" disabled>회원가입</button>
+            <a href="/login"><button type="button" class="btn btn-secondary pull-right"
+                     style="margin-left: 1em; margin-top: 1.5em;">로그인</button></a>
         </form>
     </div>
 </div>
 
 <script type="text/javascript">
 
-    var validationComponents = [false, false, false];
+    let validationComponents = [false, false, false];
 
     $(document).ready(function() {
         $('#email').on('blur', function () {
-            var email = document.getElementById('email').value;
-            var emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+            let email = document.getElementById('email').value;
+            let emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 
             if(email.match(emailRegExp)!=null) {
                 $.ajax({
@@ -67,7 +68,7 @@
 
     $(document).ready(function () {
         $('#userName').on('blur', function () {
-            var userName = document.getElementById('userName').value;
+            let userName = document.getElementById('userName').value;
             if(userName.length>0) {
                 $(this).css("background-color","#E3ECFE");
                 validationComponents[1] = true;
@@ -77,7 +78,7 @@
 
     $(document).ready(function() {
         $('#password').on('blur', function () {
-            var password = $(this).val();
+            let password = $(this).val();
             if(password.length>0 && password.length<8) {
                 alert("비밀번호가 너무 짧습니다.");
                 $('#password').val('');
@@ -89,8 +90,8 @@
     });
 
     function validationPw() {
-        var password = $('#password').val();
-        var passwordConfirm = $('#passwordConfirm').val();
+        let password = $('#password').val();
+        let passwordConfirm = $('#passwordConfirm').val();
 
         if(password!==passwordConfirm) {
             alert("비밀번호가 일치하지 않습니다.");
