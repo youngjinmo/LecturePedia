@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +21,6 @@ public class LectureServiceImpl implements LectureService{
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Override
     public void addLecture(RequestSaveLectureDto requestSaveLectureDto, Long authorId) {
@@ -85,8 +80,8 @@ public class LectureServiceImpl implements LectureService{
     }
 
     @Override
-    public List<Lecture> findAll() {
-        return lectureRepository.findAll();
+    public boolean isEmptyList() {
+        return lectureRepository.findAll().isEmpty();
     }
 
     private String getAuthorName(Long id) {
@@ -96,7 +91,7 @@ public class LectureServiceImpl implements LectureService{
     @Override
     public void updateAuthorName(Long authorId) {
         String authorName = userRepository.findById(authorId).get().getUserName();
-        List<Lecture> lectures = lectureRepository.findByAuthorId(authorId);
+        List<Lecture> lectures = lectureRepository.findLecturesByAuthorId(authorId);
         for (Lecture lecture : lectures) {
             lecture.setAuthorName(authorName);
             lectureRepository.save(lecture);
@@ -104,10 +99,12 @@ public class LectureServiceImpl implements LectureService{
     }
 
     @Override
-    public List<Lecture> getLecturesMostView(int count) {
-        String query = "SELECT lecture FROM Lecture lecture ORDER BY lecture.views DESC";
-        TypedQuery typedQuery = entityManager.createQuery(query, Lecture.class);
-        typedQuery.setMaxResults(count);
-        return typedQuery.getResultList();
+    public List<Lecture> getLecturesMostView() {
+        return lectureRepository.findTop4ByOrderByViewsDesc();
+    }
+
+    @Override
+    public List<Lecture> getAllLectures() {
+        return lectureRepository.findAll();
     }
 }

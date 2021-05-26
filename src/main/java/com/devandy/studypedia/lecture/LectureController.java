@@ -40,10 +40,10 @@ public class LectureController {
 
     @GetMapping("/lecture/list")
     public String getLectureList(Model model) {
-        if(lectureService.findAll().isEmpty()) {
+        if(lectureService.isEmptyList()) {
             return "redirect:/lecture/register";
         }
-        model.addAttribute("lectures", lectureService.findAll());
+        model.addAttribute("lectures", lectureService.getAllLectures());
         return "lecture/listLecture";
     }
 

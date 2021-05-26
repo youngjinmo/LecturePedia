@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface LectureRepository extends JpaRepository<Lecture, Long> {;
-    List<Lecture> findByAuthorId(Long authorId);
+    List<Lecture> findLecturesByAuthorId(Long authorId);
+    List<Lecture> findTop4ByOrderByViewsDesc();
 }

@@ -26,7 +26,7 @@ public class MainController {
             User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
             model.addAttribute("userName",currentUser.getUserName());
         }
-        model.addAttribute("lecturesMostView", lectureService.getLecturesMostView(4));
+        model.addAttribute("lecturesMostView", lectureService.getLecturesMostView());
         return "index";
     }
 

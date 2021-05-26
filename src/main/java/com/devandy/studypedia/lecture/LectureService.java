@@ -13,7 +13,8 @@ public interface LectureService {
     boolean hasAuthority(Long lectureId, Long currentUserId);
     List<Lecture> getLatestAddedLecture(int count);
     void increaseViewCount(Long id);
-    List<Lecture> findAll();
+    boolean isEmptyList();
     void updateAuthorName(Long authorId);
-    List<Lecture> getLecturesMostView(int count);
+    List<Lecture> getLecturesMostView();
+    List<Lecture> getAllLectures();
 }
