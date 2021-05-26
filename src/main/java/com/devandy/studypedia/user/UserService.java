@@ -14,4 +14,5 @@ public interface UserService {
     boolean validationPasswordByLogin(String email, String password);
     void deleteUser(Long id);
     List<User> getAllUsers();
+    boolean hasAuthority(Long lectureId, HttpSession session);
 }

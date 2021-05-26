@@ -1,5 +1,8 @@
 package com.devandy.studypedia.user;
 
+import com.devandy.studypedia.lecture.Lecture;
+import com.devandy.studypedia.lecture.LectureRepository;
+import com.devandy.studypedia.lecture.LectureService;
 import com.devandy.studypedia.utils.HttpSessionUtils;
 import com.devandy.studypedia.web.dto.user.RequestSaveUserDto;
 import com.devandy.studypedia.web.dto.user.RequestUpdateUserDto;
@@ -16,6 +19,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    private final LectureRepository lectureRepository;
+
+    private final LectureService lectureService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -74,5 +81,17 @@ public class UserServiceImpl implements UserService {
             }
         }
         return usersExceptAdmin;
+    }
+
+    @Override
+    public boolean hasAuthority(Long lectureId, HttpSession session) {
+        if(!HttpSessionUtils.isLoginUser(session)) {
+            return false;
+        }
+        User currentUser = HttpSessionUtils.getUserFromSession(session);
+        Lecture targetLecture = lectureRepository.findById(lectureId).get();
+        String sessionedUserName = currentUser.getUserName();
+        String lectureAuthorName = targetLecture.getAuthorName();
+        return lectureAuthorName.equals(sessionedUserName) || currentUser.getRole().equals(Role.ADMIN);
     }
 }

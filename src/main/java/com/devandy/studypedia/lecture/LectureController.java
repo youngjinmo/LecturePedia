@@ -47,19 +47,17 @@ public class LectureController {
         return "lecture/listLecture";
     }
 
-    @GetMapping("/lecture/{id}")
-    public String getLecture(@PathVariable Long id, Model model, HttpSession session) {
-        if(session.getAttribute(HttpSessionUtils.USER_SESSION_KEY)==null) {
+    @GetMapping("/lecture/{lectureId}")
+    public String getLecture(@PathVariable Long lectureId, Model model, HttpSession session) {
+        if(!HttpSessionUtils.isLoginUser(session)) {
             return "redirect:/login";
         }
-        lectureService.increaseViewCount(id);
-        Lecture lecture = lectureService.getLecture(id);
-        model.addAttribute("lecture",lecture);
-
-        User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        if(currentUser!=null && lectureService.hasAuthority(id, currentUser.getId())){
-            model.addAttribute("authority", true);
+        if(!userService.hasAuthority(lectureId, session)) {
+            lectureService.increaseViewCount(lectureId);
         }
+        Lecture targetLecture = lectureService.getLecture(lectureId);
+        model.addAttribute("lecture",targetLecture);
+        model.addAttribute("authority", true);
         return "lecture/detailLecture";
     }
 
