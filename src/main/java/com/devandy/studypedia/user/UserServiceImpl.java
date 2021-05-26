@@ -6,7 +6,8 @@ import com.devandy.studypedia.lecture.LectureService;
 import com.devandy.studypedia.utils.HttpSessionUtils;
 import com.devandy.studypedia.web.dto.user.RequestSaveUserDto;
 import com.devandy.studypedia.web.dto.user.RequestUpdateUserDto;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +15,21 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    private final LectureRepository lectureRepository;
+    @Autowired
+    private LectureRepository lectureRepository;
 
-    private final LectureService lectureService;
+    @Autowired
+    private LectureService lectureService;
 
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public boolean validationEmail(String email) {
@@ -68,7 +73,6 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         User targetUser = userRepository.findById(id).get();
         userRepository.delete(targetUser);
-
     }
 
     @Override
