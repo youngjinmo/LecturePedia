@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class LectureServiceImpl implements LectureService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public void addLecture(RequestSaveLectureDto requestSaveLectureDto, Long authorId) {
@@ -73,18 +78,6 @@ public class LectureServiceImpl implements LectureService{
     }
 
     @Override
-    public List<Lecture> showLecturesMain() {
-        int lecturesCount = (int) lectureRepository.count();
-        int lecturesMain = 0;
-        if(lecturesCount>0 && lecturesCount<=4) {
-            lecturesMain = lecturesCount;
-        } else if(lecturesCount>4){
-            lecturesMain = 4;
-        }
-        return getLatestAddedLecture(lecturesMain);
-    }
-
-    @Override
     public void increaseViewCount(Long id) {
         Lecture targetLecture = getLecture(id);
         targetLecture.setViews(targetLecture.getViews()+1);
@@ -108,5 +101,13 @@ public class LectureServiceImpl implements LectureService{
             lecture.setAuthorName(authorName);
             lectureRepository.save(lecture);
         }
+    }
+
+    @Override
+    public List<Lecture> getLecturesMostView(int count) {
+        String query = "SELECT lecture FROM Lecture lecture ORDER BY lecture.views DESC";
+        TypedQuery typedQuery = entityManager.createQuery(query, Lecture.class);
+        typedQuery.setMaxResults(count);
+        return typedQuery.getResultList();
     }
 }

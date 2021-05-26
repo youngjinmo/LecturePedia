@@ -22,11 +22,11 @@ public class MainController {
 
     @GetMapping(value = {"/","/index","/home"})
     public String home(Model model) {
-        User loginedUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
-        if(loginedUser != null) {
-            model.addAttribute("userName",loginedUser.getUserName());
+        if(HttpSessionUtils.isLoginUser(session)) {
+            User currentUser = (User) session.getAttribute(HttpSessionUtils.USER_SESSION_KEY);
+            model.addAttribute("userName",currentUser.getUserName());
         }
-        model.addAttribute("latestLectures", lectureService.showLecturesMain());
+        model.addAttribute("lecturesMostView", lectureService.getLecturesMostView(4));
         return "index";
     }
 
