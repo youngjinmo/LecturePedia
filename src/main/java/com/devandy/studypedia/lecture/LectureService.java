@@ -15,4 +15,5 @@ public interface LectureService {
     List<Lecture> showLecturesMain();
     void increaseViewCount(Long id);
     List<Lecture> findAll();
+    void updateAuthorName(Long authorId);
 }

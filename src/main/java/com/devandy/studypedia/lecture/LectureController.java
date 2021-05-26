@@ -1,6 +1,7 @@
 package com.devandy.studypedia.lecture;
 
 import com.devandy.studypedia.user.User;
+import com.devandy.studypedia.user.UserService;
 import com.devandy.studypedia.utils.HttpSessionUtils;
 import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
@@ -18,6 +19,9 @@ public class LectureController {
 
     @Autowired
     private LectureService lectureService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/lecture/register")
     public String registerFormLecture(HttpSession session) {

@@ -35,7 +35,8 @@ public class InitData {
         RequestSaveLectureDto lectureDto = new RequestSaveLectureDto();
         lectureDto.setTitle(title);
         lectureDto.setCreator(creator);
-        lectureDto.setAuthor(authorId);
+        lectureDto.setAuthorId(authorId);
+        lectureDto.setAuthorName(userRepository.findById(authorId).get().getUserName());
         lectureDto.setDescription(description);
         lectureDto.setLectureUrl(lectureUrl);
         lectureDto.setViews(views);

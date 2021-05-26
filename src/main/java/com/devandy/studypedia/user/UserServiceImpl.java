@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
         User userDto = userRepository.findById(id).get();
         userDto.setEmail(requestUpdateUserDto.getEmail());
         userDto.setUserName(requestUpdateUserDto.getUserName());
+        lectureService.updateAuthorName(id);
         userRepository.save(userDto);
     }
 

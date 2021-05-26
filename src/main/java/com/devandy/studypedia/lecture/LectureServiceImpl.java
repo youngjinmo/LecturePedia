@@ -24,8 +24,9 @@ public class LectureServiceImpl implements LectureService{
 
     @Override
     public void addLecture(RequestSaveLectureDto requestSaveLectureDto, Long authorId) {
-        requestSaveLectureDto.setAuthor(authorId);
+        requestSaveLectureDto.setAuthorId(authorId);
         requestSaveLectureDto.setViews(0L);
+        requestSaveLectureDto.setAuthorName(getAuthorName(authorId));
         lectureRepository.save(requestSaveLectureDto.toEntity());
     }
 
@@ -44,6 +45,7 @@ public class LectureServiceImpl implements LectureService{
         targetLecture.setCreator(requestUpdateLectureDto.getCreator());
         targetLecture.setDescription(requestUpdateLectureDto.getDescription());
         targetLecture.setLectureUrl(requestUpdateLectureDto.getLectureUrl());
+        targetLecture.setAuthorName(requestUpdateLectureDto.getAuthorName());
         lectureRepository.save(targetLecture);
     }
 
@@ -57,7 +59,7 @@ public class LectureServiceImpl implements LectureService{
     public boolean hasAuthority(Long lectureId, Long currentUserId) {
         Lecture targetLecture = lectureRepository.findById(lectureId).get();
         User currentUser = userRepository.findById(currentUserId).get();
-        return currentUserId.equals(targetLecture.getAuthor()) || currentUser.getRole().equals(Role.ADMIN);
+        return currentUserId.equals(targetLecture.getAuthorId()) || currentUser.getRole().equals(Role.ADMIN);
     }
 
     @Override
@@ -92,5 +94,19 @@ public class LectureServiceImpl implements LectureService{
     @Override
     public List<Lecture> findAll() {
         return lectureRepository.findAll();
+    }
+
+    private String getAuthorName(Long id) {
+        return userRepository.getOne(id).getUserName();
+    }
+
+    @Override
+    public void updateAuthorName(Long authorId) {
+        String authorName = userRepository.findById(authorId).get().getUserName();
+        List<Lecture> lectures = lectureRepository.findByAuthorId(authorId);
+        for (Lecture lecture : lectures) {
+            lecture.setAuthorName(authorName);
+            lectureRepository.save(lecture);
+        }
     }
 }

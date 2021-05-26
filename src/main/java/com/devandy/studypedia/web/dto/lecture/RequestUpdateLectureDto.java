@@ -14,13 +14,15 @@ public class RequestUpdateLectureDto extends BaseTimeEntity {
     private String creator;
     private String description;
     private String lectureUrl;
+    private String authorName;
 
     @Builder
-    public RequestUpdateLectureDto(String title, String creator, String description, String lectureUrl) {
+    public RequestUpdateLectureDto(String title, String creator, String description, String lectureUrl, String authorName) {
         this.title = title;
         this.creator = creator;
         this.description = description;
         this.lectureUrl = lectureUrl;
+        this.authorName = authorName;
     }
 
     public Lecture toEntity() {
@@ -29,6 +31,7 @@ public class RequestUpdateLectureDto extends BaseTimeEntity {
                 .creator(creator)
                 .description(description)
                 .lectureUrl(lectureUrl)
+                .authorName(authorName)
                 .build();
     }
 }
