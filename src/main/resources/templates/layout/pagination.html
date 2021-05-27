@@ -1,0 +1,112 @@
+<button class="button badge-primary" onclick="first()" type="button">
+  첫 페이지로 가기
+</button>
+<button class="button badge-pill" onclick="previous()" type="button">
+  이전 페이지로 가기
+</button>
+<button class="button badge-light" onclick="next()" type="button" style="margin-left: 1em;">
+  다음 페이지로 가기
+</button>
+<button class="button badge-secondary" onclick="last()" type="button">
+  마지막 페이지로 가기
+</button>
+
+<script>
+  function first() {
+    let lecturesPerPage = 5;
+    let curPage = document.location.href.split("/list")[1];
+    if(curPage==="") {
+      curPage = 0;
+    } else {
+      curPage = parseInt(document.location.href.split("page=")[1]);
+    }
+    let totalLectures = parseInt(document.getElementById('totalCount').value);
+    let firstPage = 0;
+    let lastPage = 0;
+    if(totalLectures%lecturesPerPage===0) {
+      lastPage = (totalLectures/lecturesPerPage)-1;
+    } else {
+      lastPage = (totalLectures/lecturesPerPage);
+    }
+
+    if(curPage===0) {
+      alert("첫 페이지입니다.");
+    } else {
+      window.location.href = document.location.pathname;
+    }
+  }
+
+  function previous() {
+    let lecturesPerPage = 5;
+    let curPage = document.location.href.split("/list")[1];
+    if(curPage==="") {
+      curPage = 0;
+    } else {
+      curPage = parseInt(document.location.href.split("page=")[1]);
+    }
+    let totalLectures = parseInt(document.getElementById('totalCount').value);
+    let firstPage = 0;
+    let lastPage = 0;
+    if(totalLectures%lecturesPerPage===0) {
+      lastPage = (totalLectures/lecturesPerPage)-1;
+    } else {
+      lastPage = (totalLectures/lecturesPerPage);
+    }
+
+    if(curPage===firstPage) {
+      alert("첫 페이지입니다.");
+    } else {
+      let move = curPage-1;
+      window.location.href = document.location.pathname+"?page="+move;
+    }
+  }
+
+  function next() {
+    let lecturesPerPage = 5;
+    let curPage = document.location.href.split("/list")[1];
+    if(curPage==="") {
+      curPage = 0;
+    } else {
+      curPage = parseInt(document.location.href.split("page=")[1]);
+    }
+    let totalLectures = parseInt(document.getElementById('totalCount').value);
+    let firstPage = 0;
+    let lastPage = 0;
+    if(totalLectures%lecturesPerPage===0) {
+      lastPage = (totalLectures/lecturesPerPage)-1;
+    } else {
+      lastPage = (totalLectures/lecturesPerPage);
+    }
+
+    if(curPage===lastPage) {
+      alert("마지막 페이지입니다.");
+    } else {
+      let move = curPage+1;
+      window.location.href = document.location.pathname+"?page="+move;
+    }
+  }
+
+  function last() {
+    let lecturesPerPage = 5;
+    let curPage = document.location.href.split("/list")[1];
+    if(curPage==="") {
+      curPage = 0;
+    } else {
+      curPage = parseInt(document.location.href.split("page=")[1]);
+    }
+    let totalLectures = parseInt(document.getElementById('totalCount').value);
+    let firstPage = 0;
+    let lastPage = 0;
+    if(totalLectures%lecturesPerPage===0) {
+      lastPage = (totalLectures/lecturesPerPage)-1;
+    } else {
+      lastPage = (totalLectures/lecturesPerPage);
+    }
+
+    if(curPage===lastPage) {
+      alert("마지막 페이지입니다.");
+    } else {
+      window.location.href = document.location.pathname+"?page="+lastPage;
+    }
+  }
+</script>

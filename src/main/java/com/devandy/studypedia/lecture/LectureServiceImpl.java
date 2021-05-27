@@ -7,6 +7,8 @@ import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -104,7 +106,13 @@ public class LectureServiceImpl implements LectureService{
     }
 
     @Override
-    public List<Lecture> getAllLectures() {
-        return lectureRepository.findAll();
+    public Page<Lecture> getLecturesByPagination(Pageable pageable) {
+        return lectureRepository.findAllByOrderByFirstCreatedDateDesc(pageable);
     }
+
+    @Override
+    public long getLecturesTotalCount() {
+        return lectureRepository.count();
+    }
+
 }

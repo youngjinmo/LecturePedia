@@ -2,6 +2,8 @@ package com.devandy.studypedia.lecture;
 
 import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -16,5 +18,6 @@ public interface LectureService {
     boolean isEmptyList();
     void updateAuthorName(Long authorId);
     List<Lecture> getLecturesMostView();
-    List<Lecture> getAllLectures();
+    Page<Lecture> getLecturesByPagination(Pageable pageable);
+    long getLecturesTotalCount();
 }

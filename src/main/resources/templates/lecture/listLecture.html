@@ -9,7 +9,7 @@
   }
 </style>
 
-<div class="container" style="min-height: 540px; margin-top: 5%; text-align: center;">
+<div class="container" style="min-height: 600px; text-align: center; margin-top: 5%;">
   <h2 style="margin-bottom: 1em">강의 목록</h2>
   <table class="table table-hover">
     <thead>
@@ -38,6 +38,14 @@
   <a href="/lecture/register">
     <button class="btn btn-success pull-right" style="margin-top: 1em; float:left;">등록하기</button>
   </a>
+  {{> /layout/pagination}}
+
+  <p style="float: right;">총 게시글 :
+    {{#totalCount}}
+    <span>{{totalCount}}</span>
+    <input id="totalCount" value="{{totalCount}}" hidden>
+    {{/totalCount}}
+  </p>
 </div>
 
 {{> /layout/footer}}

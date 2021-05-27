@@ -6,6 +6,9 @@ import com.devandy.studypedia.utils.HttpSessionUtils;
 import com.devandy.studypedia.web.dto.lecture.RequestSaveLectureDto;
 import com.devandy.studypedia.web.dto.lecture.RequestUpdateLectureDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class LectureController {
@@ -36,15 +40,6 @@ public class LectureController {
         User author = HttpSessionUtils.getUserFromSession(session);
         lectureService.addLecture(requestSaveLectureDto, author.getId());
         return "redirect:/lecture/list";
-    }
-
-    @GetMapping("/lecture/list")
-    public String getLectureList(Model model) {
-        if(lectureService.isEmptyList()) {
-            return "redirect:/lecture/register";
-        }
-        model.addAttribute("lectures", lectureService.getAllLectures());
-        return "lecture/listLecture";
     }
 
     @GetMapping("/lecture/{lectureId}")
@@ -82,5 +77,20 @@ public class LectureController {
             return "redirect:/lecture/list";
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/lecture/list")
+    public String retrievePosts(final @PageableDefault(size = 5, page = 0) Pageable pageable, Model model) {
+        if(lectureService.isEmptyList()) {
+            return "redirect:/lecture/register";
+        }
+
+        Page<Lecture> lecturesForPage = lectureService.getLecturesByPagination(pageable);
+        List<Lecture> lectures = lecturesForPage.getContent();
+        model.addAttribute("lectures", lectures);
+
+        long totalCount = lectureService.getLecturesTotalCount();
+        model.addAttribute("totalCount",totalCount);
+        return "lecture/listLecture";
     }
 }
