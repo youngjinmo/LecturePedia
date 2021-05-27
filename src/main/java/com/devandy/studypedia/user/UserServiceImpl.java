@@ -32,15 +32,14 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public boolean validationEmail(String email) {
+    public boolean isNotExistEmail(String email) {
         return userRepository.findByEmail(email)==null;
     }
 
     @Override
-    public boolean validationPasswordByLogin(String email, String password) {
+    public boolean validationLoginByPassword(String email, String password) {
         User targetUser = userRepository.findByEmail(email);
-        boolean result = passwordEncoder.matches(password, targetUser.getPassword());
-        return result;
+        return passwordEncoder.matches(password, targetUser.getPassword());
     }
 
     @Override

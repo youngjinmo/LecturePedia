@@ -27,20 +27,21 @@
         let password = document.getElementById('password').value;
         let loginForm = document.loginForm;
 
-        console.log('email : '+email);
-        console.log('password : '+password);
-
-        if(wrongEmail(email)) {
-            alert("이메일을 잘못 입력하였습니다.");
-        } else if (wrongPassword(email, password)){
-            alert("비밀번호를 잘못 입력하였습니다.");
+        let isOkEmail = validationEmail(email);
+        if(isOkEmail) {
+            let isOkPassword = validationPassword(email, password);
+            if(isOkPassword) {
+                alert("Welcome back!");
+                loginForm.submit();
+            } else {
+                alert("비밀번호를 잘못 입력하였습니다.");
+            }
         } else {
-            alert("Welcome back!");
-            loginForm.submit();
+            alert("이메일을 잘못 입력하였습니다.");
         }
     }
 
-    function wrongEmail(email) {
+    function validationEmail(email) {
         let result = false;
         $.ajax({
             type: 'POST',
@@ -50,7 +51,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             success: function(data){
-                if(data){
+                if(!data){
                     result = true;
                 }
             },
@@ -62,22 +63,21 @@
         return result;
     }
 
-    function wrongPassword(email, password) {
-        let result = true;
+    function validationPassword(email, password) {
+        let result = false;
 
         $.ajax({
             type: 'POST',
             url: '/user/passwordChk',
             async: false,
-            dataType: 'html',
+            dataType: 'json',
             data: {
                 'email': email,
                 'password': password
             },
             success: function(data) {
                 if(data) {
-                    result = false;
-                } else {
+                    result = true;
                 }
             },
             error: function(error){

@@ -10,8 +10,8 @@ public interface UserService {
     void createUser(RequestSaveUserDto requestSaveUserDto);
     boolean isAvaliableUpdateUser(Long id, HttpSession session);
     void updateUser(Long id, RequestUpdateUserDto requestUpdateUserDto);
-    boolean validationEmail(String email);
-    boolean validationPasswordByLogin(String email, String password);
+    boolean isNotExistEmail(String email);
+    boolean validationLoginByPassword(String email, String password);
     void deleteUser(Long id);
     List<User> getAllUsers();
     boolean hasAuthority(Long lectureId, HttpSession session);
