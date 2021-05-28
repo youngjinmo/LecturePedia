@@ -21,6 +21,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jdbc', version: '2.5.0'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.25'
     implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.4.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.5'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.5'
